@@ -1,6 +1,7 @@
 
 var startButtonEl = document.querySelector('#start-quiz');
 var timerEl = document.querySelector('#timer');
+var initialSubmitBtn = document.getElementById('initial-submit');
 var timeLeft = 75;
 startButtonEl.textContent = 'Start Quiz'
 var questionIndex = 0
@@ -69,8 +70,9 @@ function displayNextQuestion() {
     ans2.textContent = currentQuestion.ans2;
     ans3.textContent = currentQuestion.ans3;
     ans4.textContent = currentQuestion.ans4;
-
-
+    if (questionIndex === 3) {
+        endQuiz()
+    }
 }
 
 function timer() {
@@ -104,17 +106,25 @@ function endQuiz() {
     initialSubmit.classList.remove('hidden');
     var endScreen = document.getElementById('end-screen');
     endScreen.classList.remove('hidden');
+    renderMessage()
 }
 
+function renderMessage() {
+    var endMessage = JSON.parse(localStorage.getItem("highScore"))
+}
 function checkAns(event) {
     console.log(event.target.textContent)
     var responseMessage = document.getElementById('response-message');
 
     if (event.target.textContent === questions[questionIndex]['correct']) {
         responseMessage.textContent = 'Correct';
+        questionIndex++;
+        displayNextQuestion();
     } else {
         responseMessage.textContent = 'Incorrect';
         timeLeft -= 10;
+        questionIndex++;
+        displayNextQuestion();
     }
     responseMessage.classList.remove('hidden');
 }
@@ -128,3 +138,15 @@ ans1.addEventListener('click', checkAns)
 ans2.addEventListener('click', checkAns)
 ans3.addEventListener('click', checkAns)
 ans4.addEventListener('click', checkAns)
+
+initialSubmitBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    localStorage.setItem('highScore', JSON.stringify(highScore));
+    
+    var highScore = {
+        initials: document.getElementById('initial'),
+        score: document.getElementById('')
+    }
+    
+})
