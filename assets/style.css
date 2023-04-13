@@ -1,0 +1,89 @@
+* {
+    font-size: 62.5%;
+    background-color: #333333
+}
+
+body {
+    min-height: 100vh;
+    color: white;
+    display: flexbox;
+    
+}
+
+#top {
+    display: flex;
+    justify-content: space-between
+}
+
+.home-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#high-scores {
+    font-size: 2rem;
+    margin: 0 0 0 0;
+    
+}
+
+#title {
+    font-size: 4rem;
+    padding: 5% 0 0 0;
+    
+}
+
+#instructions {
+    font-size: 3rem;
+    padding: 0 30% 0 30%;
+}
+
+#start-quiz {
+    margin-top: 5rem;
+    padding: 10px 20px 10px 20px;
+    color: white;
+    background-color: rgb(66, 1, 66);
+    font-size: 3rem;
+
+}
+
+#timer {
+    font-size: 2rem;
+    margin: 0 0 0 0;
+}
+
+.game-screen {
+    color: white;
+    font-size: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3%;
+}
+
+button {
+    color: white;
+    width: 15%;
+    margin: 1%;
+    background-color: rgb(66, 1, 66);
+}
+
+#question {
+    font-size: 6rem;
+}
+
+.end-screen {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 5rem;
+}
+
+#response-message{ 
+    color: white;
+}
+
+.hidden {
+    display: none;
+}

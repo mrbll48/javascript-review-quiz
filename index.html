@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="./assets/style.css">
+        <title>Quiz 1</title>
+    </head>
+    <body>
+        <header id="top">
+            <p id="high-scores">View High Scores</p>
+            <p id="timer"></p>
+        </header>
+        
+        <section id="home-screen" class="home-screen"> 
+            <h1 id="title">Coding Quiz Challenge</h1>
+            <h2 id="instructions">Try to answer the following coding related questions within the time limit. Keep in mind incorrect answers will penalize your score/time by ten seconds.</h2>
+            <button id="start-quiz"></button>
+        </section>
+
+        <section id="game-screen" class="game-screen" class="hidden">
+            <h3 id="question">
+            </h3>
+            <button id="ans1" class="hidden"></button>
+            <button id="ans2" class="hidden"></button>
+            <button id="ans3" class="hidden"></button>
+            <button id="ans4" class="hidden"></button>
+            <p class="hidden" readonly id="response-message" ></p>
+        </section>
+
+        <section id="end-screen" class="end-screen" class="hidden">
+            <h3 class="hidden" id="end-title">Game Over: record your initials in the box below</h3>
+            <input type="text" id="initial" class="hidden"/>
+            <button id="initial-submit" class="hidden">Submit Initials</button>
+        </section>
+
+        <script src="./assets/script.js"></script>
+    </body>
+</html>
