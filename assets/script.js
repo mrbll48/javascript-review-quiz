@@ -70,9 +70,7 @@ function displayNextQuestion() {
     ans3.textContent = currentQuestion.ans3;
     ans4.textContent = currentQuestion.ans4;
 
-    for (var i = 1; i <= currentQuestion; i++) {
-        currentQuestion++
-    }
+
 }
 
 function timer() {
@@ -112,7 +110,7 @@ function checkAns(event) {
     console.log(event.target.textContent)
     var responseMessage = document.getElementById('response-message');
 
-    if (event.target.textContent === questions[questionIndex]) {
+    if (event.target.textContent === questions[questionIndex]['correct']) {
         responseMessage.textContent = 'Correct';
     } else {
         responseMessage.textContent = 'Incorrect';
