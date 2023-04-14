@@ -2,9 +2,25 @@
 var startButtonEl = document.querySelector('#start-quiz');
 var timerEl = document.querySelector('#timer');
 var initialSubmitBtn = document.getElementById('initial-submit');
+var inputName = document.getElementById('initial');
+var question = document.getElementById('question');
+var ans1 = document.getElementById('ans1');
+var ans2 = document.getElementById('ans2');
+var ans3 = document.getElementById('ans3');
+var ans4 = document.getElementById('ans4');
+var gameScreen = document.getElementById('game-screen');
+var btn1 = document.getElementById('ans1');
+var btn2 = document.getElementById('ans2');
+var btn3 = document.getElementById('ans3');
+var btn4 = document.getElementById('ans4');
+var endTitle = document.getElementById('end-title');
+var initial = document.getElementById('initial');
+var initialSubmit = document.getElementById('initial-submit');
+var endScreen = document.getElementById('end-screen');
+startButtonEl.textContent = 'Start Quiz';
 var timeLeft = 75;
-startButtonEl.textContent = 'Start Quiz'
-var questionIndex = 0
+var questionIndex = 0;
+var timeInterval;
 var questions = [
     {
         question: 'Commonly used data types DO NOT include:',
@@ -38,20 +54,9 @@ var questions = [
         ans4: 'square brackets',
         correct: 'quotes',
     },
-]
+];
 
-var question = document.getElementById('question');
-var ans1 = document.getElementById('ans1');
-var ans2 = document.getElementById('ans2');
-var ans3 = document.getElementById('ans3');
-var ans4 = document.getElementById('ans4');
-
-var gameScreen = document.getElementById('game-screen');
-var btn1 = document.getElementById('ans1');
-var btn2 = document.getElementById('ans2');
-var btn3 = document.getElementById('ans3');
-var btn4 = document.getElementById('ans4');
-
+// function starts quiz. removes home screen and shows first question and answer choices.
 function startQuiz() {
     var homeScreen = document.getElementById('home-screen');
     homeScreen.classList.add('hidden');
@@ -63,6 +68,7 @@ function startQuiz() {
     displayNextQuestion();
 }
 
+// function shows each successive question as answers are chosen. 
 function displayNextQuestion() {
     var currentQuestion = questions[questionIndex];
     question.textContent = currentQuestion.question
@@ -75,43 +81,35 @@ function displayNextQuestion() {
     }
 }
 
+// function starts timer when called. 
 function timer() {
-var timeInterval = setInterval(function () {
+    timeInterval = setInterval(function () {
     if (timeLeft > 0) {
         timerEl.textContent = timeLeft + ' seconds remaining';
         timeLeft--;
-    } else if (timeLeft === 1) { 
-        timerEl.textContent = timeLeft + ' second remaining';
-        timeLeft--;
     } else {
-        timerEl.textContent = '';
-        clearInterval(timeInterval);
         endQuiz();
     }
 }, 1000)
 }
 
+// stops quiz and timer, shows end screen where score and initials can be recored. 
 function endQuiz() {
+    clearInterval(timeInterval);
     gameScreen.classList.add('hidden');
-    btn1.classList.add('hidden')
-    btn2.classList.add('hidden')
-    btn3.classList.add('hidden')
-    btn4.classList.add('hidden')
-
-    var endTitle = document.getElementById('end-title');
-    var initial = document.getElementById('initial');
-    var initialSubmit = document.getElementById('initial-submit');
+    btn1.classList.add('hidden');
+    btn2.classList.add('hidden');
+    btn3.classList.add('hidden');
+    btn4.classList.add('hidden');
+   
     endTitle.classList.remove('hidden');
     initial.classList.remove('hidden');
     initialSubmit.classList.remove('hidden');
-    var endScreen = document.getElementById('end-screen');
-    endScreen.classList.remove('hidden');
-    renderMessage()
+    endScreen.classList.remove('hidden');  
+    renderMessage();
 }
 
-function renderMessage() {
-    var endMessage = JSON.parse(localStorage.getItem("highScore"))
-}
+// function checks to see if correct answer was clicked, pops up either corect or incorrect based on answer choice. 
 function checkAns(event) {
     console.log(event.target.textContent)
     var responseMessage = document.getElementById('response-message');
@@ -129,24 +127,32 @@ function checkAns(event) {
     responseMessage.classList.remove('hidden');
 }
 
+// event listener to start quiz on button click, calls timer function and start quiz function. 
 startButtonEl.addEventListener('click', function() {
     timer();
     startQuiz();
 });
 
+// event listeners added to answer choices, calls check answer function
 ans1.addEventListener('click', checkAns)
 ans2.addEventListener('click', checkAns)
 ans3.addEventListener('click', checkAns)
 ans4.addEventListener('click', checkAns)
 
-initialSubmitBtn.addEventListener('click', function(event) {
-    event.preventDefault();
+function submitInitials() {
+    var initialInput = inputName.value;
+    var localScores = JSON.parse(localStorage.getItem('high-scores')) || [];
+    console.log(localScores);
+    console.log(initialInput);
 
-    localStorage.setItem('highScore', JSON.stringify(highScore));
-    
-    var highScore = {
-        initials: document.getElementById('initial'),
-        score: document.getElementById('')
-    }
-    
-})
+}
+
+// function will record score and initials in local storage, as well as pop up a message when called. 
+function renderMessage() {
+    var endMessage = JSON.parse(localStorage.getItem("highScore"))
+    var name = document.getElementById('initial').value;
+    highScore.push({name,timeLeft});
+    localStorage.setItem('highScore', JSON.stringify(highscores));
+}
+
+initialSubmitBtn.addEventListener('click', submitInitials);
