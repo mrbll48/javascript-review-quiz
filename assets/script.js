@@ -17,6 +17,8 @@ var endTitle = document.getElementById('end-title');
 var initial = document.getElementById('initial');
 var initialSubmit = document.getElementById('initial-submit');
 var endScreen = document.getElementById('end-screen');
+var highScoreScreen = document.getElementById('high-score-screen');
+var highScores = document.getElementById('high-score');
 startButtonEl.textContent = 'Start Quiz';
 var timeLeft = 75;
 var questionIndex = 0;
@@ -106,7 +108,7 @@ function endQuiz() {
     initial.classList.remove('hidden');
     initialSubmit.classList.remove('hidden');
     endScreen.classList.remove('hidden');  
-    renderMessage();
+    
 }
 
 // function checks to see if correct answer was clicked, pops up either corect or incorrect based on answer choice. 
@@ -133,26 +135,41 @@ startButtonEl.addEventListener('click', function() {
     startQuiz();
 });
 
+function saveScore () {
+    var savedScores = JSON.parse(localStorage.getItem('scores')) || []
+    var scoreObj = {
+        initials: initial.value,
+        score: timeLeft
+    };
+
+    savedScores.push(scoreObj)
+
+    localStorage.setItem('scores', JSON.stringify(savedScores))
+    endScreen.classList.toggle('hidden');
+    displayScores()
+}
+
+function displayScores() {
+    
+    var savedScores = JSON.parse(localStorage.getItem('scores')) || [];
+    savedScores.sort(function (a, b) {
+        return b.score - a.score;
+    });
+    for (let i = 0; i < savedScores.length; i++) {
+        var scoreObj = savedScores[i];
+        let li = document.createElement('li')
+        li.textContent = scoreObj.initials + ": " + scoreObj.score
+        highScores.append(li)
+        
+    }
+    highScoreScreen.classList.toggle('hidden');
+
+
+}
+
 // event listeners added to answer choices, calls check answer function
 ans1.addEventListener('click', checkAns)
 ans2.addEventListener('click', checkAns)
 ans3.addEventListener('click', checkAns)
 ans4.addEventListener('click', checkAns)
-
-function submitInitials() {
-    var initialInput = inputName.value;
-    var localScores = JSON.parse(localStorage.getItem('high-scores')) || [];
-    console.log(localScores);
-    console.log(initialInput);
-
-}
-
-// function will record score and initials in local storage, as well as pop up a message when called. 
-function renderMessage() {
-    var endMessage = JSON.parse(localStorage.getItem("highScore"))
-    var name = document.getElementById('initial').value;
-    highScore.push({name,timeLeft});
-    localStorage.setItem('highScore', JSON.stringify(highscores));
-}
-
-initialSubmitBtn.addEventListener('click', submitInitials);
+initialSubmit.addEventListener('click', saveScore)
